@@ -1,0 +1,117 @@
+# =============================================================================
+# DearBaby — .gitignore
+# =============================================================================
+
+# --- Secrets -----------------------------------------------------------------
+# Never commit these. SECRET_KEY, JWT_SECRET_KEY, ADMIN_INVITE_CODE and any
+# Stripe keys live here. Commit .env.example instead.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# --- User data ---------------------------------------------------------------
+# The SQLite database holds real accounts, journal entries and medical notes.
+# instance/uploads/ holds uploaded photos, videos and ultrasound scans.
+# Neither belongs in a repository, public or private.
+*.db
+*.sqlite
+*.sqlite3
+instance/
+web/backend/instance/
+web/backend/dearbaby_dev.db
+uploads/
+media/
+!web/backend/dearbaby/media/
+
+# --- Python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib60/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Type checkers / linters
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.pytype/
+
+# Migrations output you may not want yet (delete this line once you use Alembic)
+# migrations/versions/*.py
+
+# --- Node / frontend ---------------------------------------------------------
+node_modules/
+.pnp
+.pnp.js
+dist/
+dist-ssr/
+build/
+*.local
+.vite/
+.cache/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Test output
+coverage/
+.nyc_output/
+vitest.config.js.timestamp-*
+
+# --- Editors & OS ------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Misc --------------------------------------------------------------------
+*.bak
+*.tmp
+tmp/
+temp/
+.history/

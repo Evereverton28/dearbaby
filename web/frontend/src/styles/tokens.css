@@ -1,0 +1,167 @@
+/* =========================================================================
+   DearBaby — design tokens
+   Every colour, radius and shadow lives here once. Components reference
+   tokens and never hardcode a colour. Dark mode is a single override block.
+
+   Contrast verified numerically: src/styles/contrast_check.py
+   (4.5:1 body text, 3:1 controls — all pairings pass in both themes)
+   ========================================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* --- surfaces --- */
+  --bg:             #F4EDE3;   /* oat   — page background */
+  --surface:        #FBF7F0;   /* linen — cards, sheets   */
+  --surface-sunken: #EFE7DA;   /* wells, inset areas      */
+  --border:         #EADFCF;   /* DECORATIVE hairline only */
+  --border-control: #9C8768;   /* inputs, focusable outlines (3:1 verified) */
+
+  /* --- text --- */
+  --text:        #40352E;   /* espresso */
+  --text-muted:  #6E6157;   /* taupe    */
+  --text-subtle: #8C7C6E;   /* captions on large type only */
+
+  /* -----------------------------------------------------------------
+     THE DOUBLE-DUTY SPLIT.
+
+     A single --mauve token would be used as BOTH heading/link text AND
+     as the solid background of primary buttons. Those two uses must flip
+     in OPPOSITE directions in dark mode: the text needs to get LIGHTER,
+     while the button background must stay DARK so white text on it stays
+     readable. One token cannot do both — that is exactly what makes dark
+     mode look broken in patches.
+
+     So: --accent-text and --accent-solid are separate, and flip
+     independently below. Same for the sage secondary.
+     ----------------------------------------------------------------- */
+  --accent-text:  #7A5A60;   /* mauve as TEXT / links       */
+  --accent-solid: #8E6C72;   /* mauve as BUTTON BACKGROUND  */
+  --accent-on:    #FFFFFF;   /* text sitting ON accent-solid */
+  --accent-soft:  #EFE1DC;   /* tinted fills, chips          */
+
+  --secondary-text:  #5F6B51;  /* sage as text        */
+  --secondary-solid: #6E7A5E;  /* sage as background  */
+  --secondary-on:    #FFFFFF;
+  --secondary-soft:  #E5E9DE;
+
+  /* --- status --- */
+  --danger-text:  #8C3A32;
+  --danger-solid: #9B4038;
+  --danger-on:    #FFFFFF;
+  --success-text: #40663F;
+
+  /* --- shape & depth --- */
+  --radius-sm: 12px;
+  --radius:    20px;
+  --radius-lg: 28px;
+  --shadow-sm: 0 2px 8px -4px rgba(64, 53, 46, .35);
+  --shadow:    0 12px 28px -20px rgba(64, 53, 46, .45);
+  --shadow-lg: 0 24px 48px -28px rgba(64, 53, 46, .5);
+
+  /* --- type --- */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-ui: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+}
+
+/* =========================================================================
+   DARK MODE — one override block. Switch the attribute on <html> and the
+   whole app re-skins. No per-component dark variants anywhere.
+   ========================================================================= */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg:             #1C1913;
+  --surface:        #262119;
+  --surface-sunken: #201C15;
+  --border:         #3A332A;
+  --border-control: #7A6F5E;
+
+  --text:        #ECE5D5;
+  --text-muted:  #B3A797;
+  --text-subtle: #948875;
+
+  --accent-text:  #D9AEB3;   /* LIGHTER — it is text on a dark background */
+  --accent-solid: #8E6C72;   /* UNCHANGED — white text on it must stay readable */
+  --accent-on:    #FFFFFF;
+  --accent-soft:  #3B2E30;
+
+  --secondary-text:  #B6C3A4;
+  --secondary-solid: #5C6850;
+  --secondary-on:    #FFFFFF;
+  --secondary-soft:  #2C3327;
+
+  --danger-text:  #E8A29B;
+  --danger-solid: #9B4038;
+  --danger-on:    #FFFFFF;
+  --success-text: #A6C9A4;
+
+  --shadow-sm: 0 2px 8px -4px rgba(0, 0, 0, .6);
+  --shadow:    0 12px 28px -20px rgba(0, 0, 0, .7);
+  --shadow-lg: 0 24px 48px -28px rgba(0, 0, 0, .75);
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; }
+
+a { color: var(--accent-text); }
+
+/* Visible keyboard focus, on every theme. */
+:focus-visible {
+  outline: 2px solid var(--accent-solid);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+input, select, textarea {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font: inherit;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+}
+
+.btn {
+  font: inherit; font-weight: 700; cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  padding: 11px 22px;
+}
+.btn-primary   { background: var(--accent-solid);    color: var(--accent-on); }
+.btn-secondary { background: var(--secondary-solid); color: var(--secondary-on); }
+.btn-ghost     { background: transparent; color: var(--accent-text);
+                 border-color: var(--border-control); }
+.btn-danger    { background: var(--danger-solid);    color: var(--danger-on); }
+
+/* Data tables can't collapse meaningfully — scroll them instead of letting
+   them blow out the page width. */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-scroll table { min-width: 640px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

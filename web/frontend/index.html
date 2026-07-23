@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DearBaby</title>
+
+    <!-- ===================================================================
+         PRE-PAINT THEME SCRIPT.
+
+         This is BLOCKING and sits BEFORE any stylesheet or bundle, on
+         purpose. Applying the theme inside a React effect runs after the
+         browser has already painted, which produces a white flash on every
+         load for dark-mode users.
+
+         Resolution order: saved choice -> OS setting -> light.
+         =================================================================== -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('dearbaby-theme');
+          var theme = saved
+            || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          // Keep mobile browser chrome in step with the app.
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', theme === 'dark' ? '#1C1913' : '#F4EDE3');
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+
+    <meta name="theme-color" content="#F4EDE3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

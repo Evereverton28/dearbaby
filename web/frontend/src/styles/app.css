@@ -1,0 +1,178 @@
+/* Layout and component styles. Every colour comes from tokens.css.
+   Layout lives in CLASSES only — never inline styles, which beat media
+   queries on specificity and silently keep phones multi-column. */
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px 20px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.brand {
+  font-family: var(--font-display); font-weight: 600; font-size: 21px;
+  color: var(--text); text-decoration: none; letter-spacing: -.3px;
+}
+.brand span { color: var(--accent-text); }
+.topbar-spacer { flex: 1; }
+
+.navlinks { display: flex; gap: 4px; }
+.navlinks a {
+  padding: 8px 14px; border-radius: 100px; text-decoration: none;
+  color: var(--text-muted); font-weight: 600; font-size: 14px;
+}
+.navlinks a:hover { background: var(--surface-sunken); color: var(--text); }
+.navlinks a.active { background: var(--accent-soft); color: var(--accent-text); }
+
+.icon-btn {
+  width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); cursor: pointer;
+  display: grid; place-items: center; font-size: 16px;
+}
+.icon-btn:hover { background: var(--surface-sunken); }
+
+/* ---- user dropdown ---- */
+.user-menu-wrap { position: relative; }
+.user-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 50;
+  min-width: 200px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); box-shadow: var(--shadow);
+  padding: 8px 0;
+}
+.user-dropdown-name { padding: 8px 16px 2px; font-weight: 700; font-size: 14px; }
+.user-dropdown-email { padding: 0 16px 8px; font-size: 12px; color: var(--text-muted); }
+.user-dropdown hr {
+  border: none; border-top: 1px solid var(--border); margin: 4px 0;
+}
+.user-dropdown a {
+  display: block; padding: 10px 16px; text-decoration: none;
+  color: var(--text); font-size: 14px; font-weight: 600;
+}
+.user-dropdown a:hover { background: var(--surface-sunken); }
+
+/* The hamburger is hidden on desktop and REVEALED in the media query at the
+   bottom of this file. A mobile-only control with no rule to show it is a
+   nav that simply can't be reached on a phone. */
+.hamburger { display: none; }
+
+.mobile-menu { display: none; }
+.mobile-menu.open {
+  display: flex; flex-direction: column; gap: 2px; padding: 8px 12px 14px;
+  background: var(--surface); border-bottom: 1px solid var(--border);
+}
+.mobile-menu a {
+  padding: 12px 14px; border-radius: var(--radius-sm); text-decoration: none;
+  color: var(--text); font-weight: 600;
+}
+.mobile-menu a.active { background: var(--accent-soft); color: var(--accent-text); }
+
+/* ---------- page shell ---------- */
+.page { flex: 1; width: 100%; max-width: 1080px; margin: 0 auto; padding: 28px 20px 72px; }
+.page-narrow { max-width: 680px; }
+.page-head { margin-bottom: 22px; }
+.page-head h1 { font-size: 30px; }
+.page-head p { color: var(--text-muted); margin-top: 4px; }
+.eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 1.6px;
+  text-transform: uppercase; color: var(--accent-text);
+}
+
+.row { display: flex; align-items: center; gap: 12px; }
+.row-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stack { display: flex; flex-direction: column; gap: 14px; }
+.muted { color: var(--text-muted); font-size: 14px; }
+.center { text-align: center; }
+
+/* ---------- grids: step down 4 -> 3 -> 2 -> 1 ---------- */
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* ---------- pieces ---------- */
+.stat { text-align: center; }
+.stat b { display: block; font-family: var(--font-display); font-size: 26px; }
+.stat small { color: var(--text-muted); font-size: 12px; font-weight: 600; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;
+  background: var(--accent-soft); color: var(--accent-text);
+}
+.chip-sage { background: var(--secondary-soft); color: var(--secondary-text); }
+
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field label { font-size: 13px; font-weight: 700; color: var(--text-muted); }
+.field input, .field select, .field textarea { width: 100%; }
+.field textarea { min-height: 110px; resize: vertical; font-family: inherit; }
+
+.alert {
+  padding: 12px 16px; border-radius: var(--radius-sm); font-size: 14px;
+  border: 1px solid var(--border); margin-bottom: 14px;
+}
+.alert-error { color: var(--danger-text); border-color: var(--danger-text); }
+.alert-info { color: var(--secondary-text); border-color: var(--secondary-text); }
+
+.empty { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+.empty h3 { color: var(--text); margin-bottom: 6px; }
+
+/* week ring */
+.weekcard { display: flex; gap: 18px; align-items: center; }
+.weekcard .meta b {
+  display: block; font-family: var(--font-display); font-size: 24px; margin: 4px 0;
+}
+
+/* timeline */
+.timeline { border-left: 2px solid var(--border); padding-left: 20px; margin-left: 8px; }
+.tl-item { position: relative; padding-bottom: 22px; }
+.tl-item::before {
+  content: ''; position: absolute; left: -27px; top: 4px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent-solid); box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.tl-item time { font-size: 12px; color: var(--text-muted); font-weight: 700; }
+.tl-item h4 { font-family: var(--font-display); font-size: 17px; margin: 2px 0 4px; }
+
+/* gallery */
+.gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.gallery-grid img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  border-radius: var(--radius-sm); border: 1px solid var(--border);
+}
+
+/* post */
+.post { padding: 18px; }
+.post h3 { font-size: 18px; margin-bottom: 6px; }
+.post-meta { display: flex; gap: 10px; align-items: center; font-size: 12px; color: var(--text-muted); }
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--accent-soft);
+  color: var(--accent-text); display: grid; place-items: center;
+  font-weight: 700; font-size: 13px; flex: 0 0 auto;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--border); }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .8px; color: var(--text-muted); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: repeat(3, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 720px) {
+  .navlinks { display: none; }
+  .admin-switch { display: none; }
+  .hamburger { display: grid; }      /* <- the rule that reveals it */
+  .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .page { padding: 20px 14px 60px; }
+  .page-head h1 { font-size: 25px; }
+  .weekcard { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
